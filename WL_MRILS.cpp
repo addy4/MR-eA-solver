@@ -60,9 +60,8 @@ WL_MRILS::WL_MRILS(WL_Instance &my_in, unsigned timeout, unsigned seed, unsigned
 {
 }
 
-void WL_MRILS::Run()
+void WL_MRILS::Run(int pcea_routine)
 {
-	test();
 
 	best = NULL;
 
@@ -97,6 +96,27 @@ void WL_MRILS::Run()
 		}
 		else
 		{
+
+			if (pcea_routine)
+			{
+				for (unsigned j = 0; j < patterns.size(); j++)
+				{
+					for (unsigned t = 0; t < patterns[j].size(); t++)
+					{
+						cout << "{" << patterns[j][t].s << ", " << patterns[j][t].w << ", " << patterns[j][t].q << "}" << endl;
+					}
+
+					WL_Instance original_instance = in;
+					in = ReducedInstance(p);
+
+					in.getFixedCost();
+
+					cout << endl;
+					cout << endl;
+				}
+				exit(1);
+			}
+
 			WL_Instance original_instance = in;
 			in = ReducedInstance(p);
 
