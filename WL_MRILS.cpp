@@ -11,6 +11,7 @@
 extern "C"
 {
 #include "pcea-solution.h"
+#include "cfile.h"
 }
 
 using namespace std;
@@ -74,6 +75,8 @@ void WL_MRILS::Run()
 
 	while (clock() / CLOCKS_PER_SEC < timeout)
 	{
+		f();
+
 		i++;
 
 		cout << "iteration " << i << endl;

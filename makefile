@@ -2,8 +2,8 @@ flags = -Wall -O3
 
 all:: mrils
 
-mrils: main.o WL_MRILS.o WL_Instance.o WL_Solution.o pcea-solution.o
-	g++ -std=c++11 $(flags) main.o WL_MRILS.o pcea-solution.o WL_Instance.o WL_Solution.o -o mrils -I./include -L. -lfpmax -Wl,-rpath,.
+mrils: main.o WL_MRILS.o WL_Instance.o WL_Solution.o pcea-solution.o cfile.o
+	g++ -std=c++11 $(flags) main.o WL_MRILS.o pcea-solution.o cfile.o WL_Instance.o WL_Solution.o -o mrils -I./include -L. -lfpmax -Wl,-rpath,.
 
 main.o:
 	g++ -std=c++11 $(flags) -c main.cpp
@@ -19,6 +19,9 @@ WL_Solution.o:
 
 pcea-solution.o:
 	gcc -c pcea-solution.c
+
+cfile.o:
+	gcc -c cfile.c
 
 clean:
 	rm -f *.o mrils
