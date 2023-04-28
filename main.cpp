@@ -10,6 +10,9 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
+
+	cout << "Start MREA" << endl;
+
 	string instance;
 	if (argc < 5)
 	{

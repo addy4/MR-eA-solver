@@ -98,3 +98,13 @@ void WL_Instance::getFixedCost()
 		cout << "	" << fixed_cost[i] << endl;
 	}
 }
+
+int *WL_Instance::getCapacity()
+{
+	int *capacities_mr = (int *)malloc(capacity.size() * sizeof(int));
+	for (int i = 0; i < capacity.size(); i++)
+	{
+		capacities_mr[i] = capacity[i];
+	}
+	return capacities_mr;
+}

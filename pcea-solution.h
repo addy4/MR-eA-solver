@@ -74,5 +74,9 @@ void display(int *, int);
 int ealoop(void);
 int compare1(const void *, const void *);
 void printSol(char *, double);
+
+/* MR */
 void test();
+void readCapacity(int *capacities_mr, int ware_houses);
+
 #endif

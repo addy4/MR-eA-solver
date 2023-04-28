@@ -7,6 +7,7 @@
 #include "fpmax.h"
 
 #include "WL_MRILS.h"
+//#include "MR_debug.h"
 
 extern "C"
 {
@@ -99,21 +100,19 @@ void WL_MRILS::Run(int pcea_routine)
 
 			if (pcea_routine)
 			{
-				for (unsigned j = 0; j < patterns.size(); j++)
-				{
-					for (unsigned t = 0; t < patterns[j].size(); t++)
-					{
-						cout << "{" << patterns[j][t].s << ", " << patterns[j][t].w << ", " << patterns[j][t].q << "}" << endl;
-					}
+				test();
+				//getPatterns();
 
-					WL_Instance original_instance = in;
-					in = ReducedInstance(p);
+				WL_Instance original_instance = in;
+				//in = ReducedInstance(p);
 
-					in.getFixedCost();
+				//in.getFixedCost();
+				//original_instance.getFixedCost();
 
-					cout << endl;
-					cout << endl;
-				}
+				//in.getCapacity();
+				//original_instance.getCapacity();
+
+				readCapacity(original_instance.getCapacity(), original_instance.Warehouses());
 				exit(1);
 			}
 

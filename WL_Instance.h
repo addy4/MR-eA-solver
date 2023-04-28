@@ -32,7 +32,10 @@ public:
 	pair<unsigned, unsigned> StoreIncompatibility(unsigned i) const { return store_incompatibilities[i]; }
 	bool Incompatible(unsigned s1, unsigned s2) const { return incompatible[s1][s2]; }
 	bool WarehouseIncompatible(unsigned w, unsigned s) const { return w_incompatible[w][s]; }
+
+	/* DS conversions: PcEA -> MR */
 	void getFixedCost();
+	int *getCapacity();
 
 private:
 	unsigned stores, warehouses, reduction_opening_cost;

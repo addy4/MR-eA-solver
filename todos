@@ -1,0 +1,10 @@
+1. readCapacity(int* capacities_mr)
+- defined in pcea-solution.c
+- capacities = capacities_mr
+- Here, capacities is DS declared in pcea-solution.h 
+- readData is replaced by readCapacity for reading the capacities of warehouses in reduced instance
+
+- DO: capacities_pcea to be replaced by global var capacities -> done
+- Verify: capacities vector displayed by PcEA should be same as capacities_pcea displayed by MR-eA-solver
+
+- Basically, instance's (reduced_instance's) capacities vector info should be transffered to pcea block 
