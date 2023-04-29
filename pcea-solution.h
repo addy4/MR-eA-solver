@@ -78,5 +78,8 @@ void printSol(char *, double);
 /* MR */
 void test();
 void readCapacity(int *capacities_mr, int ware_houses);
+void readFixedcosts(int *fixedcosts_mr, int fixed_costs);
+void readDemands(int *storedemands_mr, int store_units);
+void readSupplycosts(int *supply_costs, int store_units, int ware_houses);
 
 #endif

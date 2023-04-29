@@ -100,19 +100,14 @@ void WL_MRILS::Run(int pcea_routine)
 
 			if (pcea_routine)
 			{
-				test();
-				//getPatterns();
-
 				WL_Instance original_instance = in;
 				//in = ReducedInstance(p);
 
-				//in.getFixedCost();
-				//original_instance.getFixedCost();
+				readSupplycosts(in.getSupplycosts(), in.Stores(), in.Warehouses());
+				readDemands(in.getDemands(), in.Stores());
+				readFixedcosts(in.getFixedCost(), in.Warehouses());
+				readCapacity(in.getCapacity(), in.Warehouses());
 
-				//in.getCapacity();
-				//original_instance.getCapacity();
-
-				readCapacity(original_instance.getCapacity(), original_instance.Warehouses());
 				exit(1);
 			}
 

@@ -91,12 +91,14 @@ WL_Instance::WL_Instance(const WL_Instance &in, vector<Supply> pattern)
 	}
 }
 
-void WL_Instance::getFixedCost()
+int *WL_Instance::getFixedCost()
 {
+	int *fixedcosts_mr = (int *)malloc(fixed_cost.size() * sizeof(int));
 	for (int i = 0; i < fixed_cost.size(); i++)
 	{
-		cout << "	" << fixed_cost[i] << endl;
+		fixedcosts_mr[i] = fixed_cost[i];
 	}
+	return fixedcosts_mr;
 }
 
 int *WL_Instance::getCapacity()
@@ -107,4 +109,27 @@ int *WL_Instance::getCapacity()
 		capacities_mr[i] = capacity[i];
 	}
 	return capacities_mr;
+}
+
+int *WL_Instance::getDemands()
+{
+	int *storedemands_mr = (int *)malloc(amount_of_goods.size() * sizeof(int));
+	for (int i = 0; i < amount_of_goods.size(); i++)
+	{
+		storedemands_mr[i] = amount_of_goods[i];
+	}
+	return storedemands_mr;
+}
+
+int *WL_Instance::getSupplycosts()
+{
+	int *supplycosts_mr = (int *)malloc(capacity.size() * amount_of_goods.size() * sizeof(int));
+	for (int i = 0; i < amount_of_goods.size(); i++)
+	{
+		for (int j = 0; j < capacity.size(); j++)
+		{
+			supplycosts_mr[capacity.size() * i + j] = supply_cost[i][j];
+		}
+	}
+	return supplycosts_mr;
 }

@@ -34,8 +34,10 @@ public:
 	bool WarehouseIncompatible(unsigned w, unsigned s) const { return w_incompatible[w][s]; }
 
 	/* DS conversions: PcEA -> MR */
-	void getFixedCost();
+	int *getFixedCost();
 	int *getCapacity();
+	int *getDemands();
+	int *getSupplycosts();
 
 private:
 	unsigned stores, warehouses, reduction_opening_cost;

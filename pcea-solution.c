@@ -14,6 +14,37 @@ void readCapacity(int *capacities_mr, int ware_houses)
 	}
 }
 
+void readFixedcosts(int *fixedcosts_mr, int ware_houses)
+{
+	fixedcosts = fixedcosts_mr;
+	for (int j = 0; j < ware_houses; j++)
+	{
+		printf("%d\n", fixedcosts[j]);
+	}
+}
+
+void readDemands(int *storedemands_mr, int store_units)
+{
+	goods = storedemands_mr;
+	for (int j = 0; j < store_units; j++)
+	{
+		printf("%d\n", goods[j]);
+	}
+}
+
+void readSupplycosts(int *supply_costs, int store_units, int ware_houses)
+{
+	supplycosts = supply_costs;
+	for (int i = 0; i < store_units; i++)
+	{
+		for (int j = 0; j < ware_houses; j++)
+		{
+			printf("%d\n", supplycosts[ware_houses * i + j]);
+		}
+	}
+	return;
+}
+
 void readData(char *inputfilename)
 {
 	char temp[20];
