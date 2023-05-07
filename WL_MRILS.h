@@ -14,7 +14,7 @@ class WL_MRILS
 {
 public:
 	WL_MRILS(WL_Instance &i, unsigned timeout, unsigned seed, unsigned elite_max_size, double stabi_param, double min_sup, unsigned n_patterns, bool random_opening, unsigned ils_maxiter, double ils_accept);
-	void Run(int pcea_routine);
+	void Run(int pcea_routine, char *inargv[]);
 	WL_Solution *Best() const { return best; }
 	double TimeBest() const { return time_best; }
 

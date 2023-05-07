@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
 
 	cout << "Start Run" << endl;
 
-	solver.Run(pcea_routine);
+	solver.Run(pcea_routine, argv);
 
 	WL_Solution *sol = solver.Best();
 

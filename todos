@@ -7,4 +7,10 @@
 - DO: capacities_pcea to be replaced by global var capacities -> done
 - Verify: capacities vector displayed by PcEA should be same as capacities_pcea displayed by MR-eA-solver
 
-- Basically, instance's (reduced_instance's) capacities vector info should be transffered to pcea block 
+- Basically, instance's (reduced_instance's) capacities vector info should be transffered to pcea block
+
+After 7th May 1PM --> 
+
+> Embed that part of PcEA where converted data is being used by PcEA to solve problem
+> Right now, block is taking the original_instance as input and running PCEA on original_instance
+> Need to convert it such that block takes reduced instance and then it will be expanded.  
