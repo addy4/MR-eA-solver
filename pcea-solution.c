@@ -45,6 +45,32 @@ void readSupplycosts(int *supply_costs, int store_units, int ware_houses)
 	return;
 }
 
+void readIncompatibilities(int *incompatibilities_stores, int incompatibilities_occurences)
+{
+	incompatiblepairs = (pairs *)malloc(2 * incompatibilities_occurences * sizeof(pairs));
+	int k = 0;
+	for (int i = 0; i < incompatibilities_occurences; i++)
+	{
+		incompatiblepairs[k].x = incompatibilities_stores[2 * i];
+		incompatiblepairs[k].y = incompatibilities_stores[2 * i + 1];
+		k++;
+		incompatiblepairs[k].x = incompatiblepairs[k - 1].y;
+		incompatiblepairs[k].y = incompatiblepairs[k - 1].x;
+		k++;
+	}
+	k = 0;
+	for (int j = 0; j < incompatibilities_occurences; j++)
+	{
+		printf("a~ %d, ", incompatiblepairs[k].x);
+		printf("a~ %d, ", incompatiblepairs[k].y);
+		k++;
+		printf("b~ %d, ", incompatiblepairs[k].x);
+		printf("b~ %d, ", incompatiblepairs[k].y);
+		k++;
+	}
+	printf("\n");
+}
+
 void readData(char *inputfilename)
 {
 	char temp[20];

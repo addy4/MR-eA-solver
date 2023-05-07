@@ -107,6 +107,7 @@ void WL_MRILS::Run(int pcea_routine)
 				readDemands(in.getDemands(), in.Stores());
 				readFixedcosts(in.getFixedCost(), in.Warehouses());
 				readCapacity(in.getCapacity(), in.Warehouses());
+				readIncompatibilities(in.getIncompatbilities(), in.StoreIncompatibilities());
 
 				exit(1);
 			}

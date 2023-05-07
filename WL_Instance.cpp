@@ -133,3 +133,17 @@ int *WL_Instance::getSupplycosts()
 	}
 	return supplycosts_mr;
 }
+
+int *WL_Instance::getIncompatbilities()
+{
+	unsigned int x = 1;
+	unsigned int y = 1;
+	auto custom_pair = std::make_pair(x, y);
+	int *incompatibilities_mr = (int *)malloc(2 * store_incompatibilities.size() * sizeof(int));
+	for (int i = 0; i < store_incompatibilities.size(); i++)
+	{
+		incompatibilities_mr[2 * i] = store_incompatibilities[i].first;
+		incompatibilities_mr[2 * i + 1] = store_incompatibilities[i].second;
+	}
+	return incompatibilities_mr;
+}

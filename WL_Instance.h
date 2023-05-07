@@ -38,6 +38,7 @@ public:
 	int *getCapacity();
 	int *getDemands();
 	int *getSupplycosts();
+	int *getIncompatbilities();
 
 private:
 	unsigned stores, warehouses, reduction_opening_cost;
