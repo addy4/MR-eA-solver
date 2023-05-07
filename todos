@@ -13,4 +13,9 @@ After 7th May 1PM -->
 
 > Embed that part of PcEA where converted data is being used by PcEA to solve problem
 > Right now, block is taking the original_instance as input and running PCEA on original_instance
-> Need to convert it such that block takes reduced instance and then it will be expanded.  
+> Need to convert it such that block takes reduced instance and then it will be expanded. 
+> When PCEA is run on reduced instance, then you will need to expand sol by assigning the assignments of pattters[]
+
+After 8th May 12:00 AM
+> Correction: readData operations of original PCEA being suppressed by commenting them
+> What we comment: Write operations on supplycost, capacity, fixedcost, goods, incompatiblepairs are commented! 

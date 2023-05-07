@@ -103,6 +103,7 @@ void WL_MRILS::Run(int pcea_routine, char *argv[])
 				WL_Instance original_instance = in;
 				//in = ReducedInstance(p);
 
+				cout << "Start the conversion..." << endl;
 				readSupplycosts(in.getSupplycosts(), in.Stores(), in.Warehouses());
 				readDemands(in.getDemands(), in.Stores());
 				readFixedcosts(in.getFixedCost(), in.Warehouses());
