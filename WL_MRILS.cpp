@@ -100,8 +100,8 @@ void WL_MRILS::Run(int pcea_routine, char *argv[])
 
 			if (pcea_routine)
 			{
-				WL_Instance original_instance = in;
-				//in = ReducedInstance(p);
+				//WL_Instance original_instance = in;
+				in = ReducedInstance(p);
 
 				cout << "Start the conversion..." << endl;
 
@@ -163,7 +163,6 @@ void WL_MRILS::Run(int pcea_routine, char *argv[])
 
 				finalfitness(gBestSolution, &cost, &violations);
 
-				/* 
 				pairs *solve = getSol();
 
 				for (unsigned j = 0; j < patterns[p].size(); j++)
@@ -179,7 +178,6 @@ void WL_MRILS::Run(int pcea_routine, char *argv[])
 						solcount++;
 					}
 				}
-				*/
 
 				printSol(argv[2], gBestTime);
 
