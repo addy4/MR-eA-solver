@@ -18,4 +18,31 @@ After 7th May 1PM -->
 
 After 8th May 12:00 AM
 > Correction: readData operations of original PCEA being suppressed by commenting them
-> What we comment: Write operations on supplycost, capacity, fixedcost, goods, incompatiblepairs are commented! 
+> What we comment: Write operations on supplycost, capacity, fixedcost, goods, incompatiblepairs are commented!
+
+For coming 8th May...
+> first remove un-needed code of pcea-solution.c 
+> try to print data in readData() call of pcea-solution.c 
+> Create function that replaces sol->Assign for the current data structs
+> this function should assign assignments of patterns[] that will expand the solution
+
+For after 11th May...
+> Create function/logic that could be used to expand the solution by
+> Add assignments of patterns[] to solution
+> for this, use data of sol->Assign
+> assign patterns[p][j].s, patterns[p][j].w, patterns[p][j].q  to sol[i].x , sol[i].y and sol[i].v 
+> increase solcount
+> above data will be consumed by printSol of pcea-solution.c
+
+Line 195:
+for (unsigned j = 0; j < patterns[p].size(); j++)
+   sol->Assign(patterns[p][j].s, patterns[p][j].w, patterns[p][j].q);
+
+   assign this data to sol[i].x, sol[i].y, sol[i].v and increase solcount .. solcount initialized as existing number of solutions 
+   // this should be sufficient for solution printing
+   // other operations that might need to be performed: load[w] += q, opening_cost addition.. other ops
+   // check method WL_Solution::Assign()
+
+For after 12th May...
+> Create a vector to which warehouse to store assignments of solve are pushed. 
+> Push patterns[p][0...j] to this above vector 

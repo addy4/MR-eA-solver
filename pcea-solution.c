@@ -61,6 +61,11 @@ void readIncompatibilities(int *incompatibilities_stores, int incompatibilities_
 	k = 0;
 }
 
+void expandSol()
+{
+	return;
+}
+
 void readData(char *inputfilename)
 {
 	char temp[20];
@@ -90,60 +95,60 @@ void readData(char *inputfilename)
 	// Read capacities (array of size=warehouses)
 
 	// first allocate space for capacities array
-	//capacities = (int *)malloc(warehouses * sizeof(int));
+	capacities = (int *)malloc(warehouses * sizeof(int));
 	fscanf(fp, "%s", temp);
 	fscanf(fp, "%3c", temp);
 	ch = fgetc(fp); // read '['
-	/* 
+
 	for (int i = 0; i < warehouses; i++)
 	{
 		fscanf(fp, "%d", &capacities[i]);
 		ch = fgetc(fp);
 	}
-	*/
+
 	fscanf(fp, "%2c", temp); // read '];'
 
 	// Read fixedcosts (array of size=warehouses)
 
 	//     first allocate space for fixedcosts array
-	//fixedcosts = (int *)malloc(warehouses * sizeof(int));
+	fixedcosts = (int *)malloc(warehouses * sizeof(int));
 
 	//	   then read from file
 	fscanf(fp, "%s", temp);
 	fscanf(fp, "%3c", temp);
 	ch = fgetc(fp); // read '['
-	/* 
+
 	for (int i = 0; i < warehouses; i++)
 	{
 		fscanf(fp, "%d", &fixedcosts[i]);
 		ch = fgetc(fp);
 	}
-	*/
+
 	fscanf(fp, "%2c", temp); // read '];'
 
 	// Read Goods (array of size=stores)
 
 	//     first allocate space for goods array
-	//goods = (int *)malloc(stores * sizeof(int));
+	goods = (int *)malloc(stores * sizeof(int));
 
 	//	   then read from file
 	fscanf(fp, "%s", temp);
 	fscanf(fp, "%3c", temp);
 	ch = fgetc(fp); // read '['
-	/* 
+
 	for (int i = 0; i < stores; i++)
 	{
 		fscanf(fp, "%d", &goods[i]);
 		ch = fgetc(fp);
 	}
-	*/
+
 	fscanf(fp, "%2c", temp); // read '];'
 	int i = 0, j;
 
 	// Read SupplyCosts (array of size=stores x warehouses)
 
 	//     first allocate space for supplycosts array
-	//supplycosts = (int *)malloc(stores * warehouses * sizeof(int));
+	supplycosts = (int *)malloc(stores * warehouses * sizeof(int));
 
 	//	   then read from file
 	fscanf(fp, "%s", temp);
@@ -152,15 +157,13 @@ void readData(char *inputfilename)
 	ch = fgetc(fp); // first '|'
 
 	i = 0;
-	/* 
+
 	for (j = 0; j < warehouses; j++)
 	{
 		fscanf(fp, "%d", supplycosts + warehouses * i + j);
 		ch = fgetc(fp);
 	}
-	*/
 
-	/* 
 	for (i = 1; i < stores; i++)
 	{
 		j = 0;
@@ -175,7 +178,7 @@ void readData(char *inputfilename)
 			ch = fgetc(fp);
 		}
 	}
-	*/
+
 	fscanf(fp, "%3c", temp); // read '];'
 
 	// Read blank line
@@ -190,7 +193,7 @@ void readData(char *inputfilename)
 	// Read Incompatible Pairs
 
 	// First allocate space for these pairs
-	//incompatiblepairs = (pairs *)malloc(2 * incompatibilities * sizeof(pairs));
+	incompatiblepairs = (pairs *)malloc(2 * incompatibilities * sizeof(pairs));
 
 	// Then read the file...
 	fscanf(fp, "%s", temp);
@@ -198,23 +201,23 @@ void readData(char *inputfilename)
 	fscanf(fp, "%s", temp);
 
 	int k = 0;
-	/* *
+
 	for (int i = 0; i < incompatibilities; i++)
 	{
-		//fscanf(fp, "%d", &incompatiblepairs[k].x);
+		fscanf(fp, "%d", &incompatiblepairs[k].x);
 		fscanf(fp, "%s", temp);
-		//fscanf(fp, "%d", &incompatiblepairs[k].y);
+		fscanf(fp, "%d", &incompatiblepairs[k].y);
 		fscanf(fp, "%s", temp);
-		//incompatiblepairs[k].x -= 1;
-		//incompatiblepairs[k].y -= 1;
+		incompatiblepairs[k].x -= 1;
+		incompatiblepairs[k].y -= 1;
 		k++;
-		//incompatiblepairs[k].x = incompatiblepairs[k - 1].y;
-		//incompatiblepairs[k].y = incompatiblepairs[k - 1].x;
+		incompatiblepairs[k].x = incompatiblepairs[k - 1].y;
+		incompatiblepairs[k].y = incompatiblepairs[k - 1].x;
 		k++;
 	}
-	*/
 
-	for (int j = 0; j < 3; j++)
+	/* 
+	for (int j = 0; j < 4744; j++)
 	{
 		printf("a~ %d, ", incompatiblepairs[k].x);
 		printf("a~ %d, ", incompatiblepairs[k].y);
@@ -223,6 +226,7 @@ void readData(char *inputfilename)
 		printf("b~ %d, ", incompatiblepairs[k].y);
 		k++;
 	}
+	*/
 	printf("\n");
 
 	qsort(incompatiblepairs, k, sizeof(pairs), compare1);
@@ -231,6 +235,9 @@ void readData(char *inputfilename)
 
 	// Allocate space for the solution, for use elsewhere
 	sol = (int *)malloc(warehouses * stores * sizeof(int));
+
+	// warehouse-store conflict
+	conflicts = (int *)malloc(warehouses * stores * sizeof(int));
 
 	// sol1: initially assigned a size of (stores+warehouses), can be extended if need be
 	sol1 = (pairs *)malloc((stores + warehouses) * sizeof(pairs));
@@ -256,6 +263,25 @@ void readData(char *inputfilename)
 		totalDemand += goods[i];
 
 	fclose(fp);
+}
+
+void setWhStConflict(int wh, int st)
+{
+	for (int i = 0; i < incompatibilities; i++)
+	{
+		if (incompatiblepairs[i].x == st)
+		{
+			// Initialize all sol entries to 0;
+			for (i = 0; i < stores; i++)
+				for (int j = 0; j < warehouses; j++)
+					*(sol + i * warehouses + j) = 0;
+		}
+	}
+}
+
+pairs *getSol()
+{
+	return sol1;
 }
 
 int notcorrectgbest()
@@ -758,6 +784,7 @@ void finalfitness(int str[], int *solcost, int *nviolations)
 
 	// Initialize all sol1 entries to 0;
 	solcount = 0;
+	printf("solcount in finfit = %d\n", solcount);
 	for (i = 0; i < (stores + warehouses); i++)
 	{ // put the store number in x, wh in y
 		sol1[i].x = sol1[i].y = -1;
@@ -950,7 +977,7 @@ void finalfitness(int str[], int *solcost, int *nviolations)
 
 	*nviolations = violationscount;
 	*solcost = ComputeCost();
-
+	printf("solcount in finfit = %d\n", solcount);
 	return;
 }
 
@@ -1455,12 +1482,13 @@ void printSol(char *filename, double gBestTime)
 
 	int i, j;
 	FILE *fp = fopen(filename, "w");
-	int cost, violations;
-	finalfitness(gBestSolution, &cost, &violations);
+	//int cost, violations;
+	//finalfitness(gBestSolution, &cost, &violations);
 
 	// write to file
 
 	fprintf(fp, "{");
+	printf("solcount = %d\n", solcount);
 
 	for (i = 0; i < solcount; i++)
 	{

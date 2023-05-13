@@ -104,11 +104,6 @@ void WL_MRILS::Run(int pcea_routine, char *argv[])
 				//in = ReducedInstance(p);
 
 				cout << "Start the conversion..." << endl;
-				readSupplycosts(in.getSupplycosts(), in.Stores(), in.Warehouses());
-				readDemands(in.getDemands(), in.Stores());
-				readFixedcosts(in.getFixedCost(), in.Warehouses());
-				readCapacity(in.getCapacity(), in.Warehouses());
-				readIncompatibilities(in.getIncompatbilities(), in.StoreIncompatibilities());
 
 				int i, lastimprovement = 0;
 				int imp = 0;
@@ -118,6 +113,7 @@ void WL_MRILS::Run(int pcea_routine, char *argv[])
 				double TIMEOUT, elapsed_time = 0, gBestTime = 0;
 				int rseed;
 				int MAX_IMPROVE = MAX_IMPROVE_LIMIT;
+				int cost, violations;
 
 				gBestFitness = INF; // initialize
 				gBestViolations = INF;
@@ -130,6 +126,12 @@ void WL_MRILS::Run(int pcea_routine, char *argv[])
 				rseed = (int)atoi(argv[4]);
 
 				readData(argv[1]);
+
+				readSupplycosts(in.getSupplycosts(), in.Stores(), in.Warehouses());
+				readDemands(in.getDemands(), in.Stores());
+				readFixedcosts(in.getFixedCost(), in.Warehouses());
+				readCapacity(in.getCapacity(), in.Warehouses());
+				//readIncompatibilities(in.getIncompatbilities(), in.StoreIncompatibilities());
 
 				TIMEOUT = atof(argv[3]); //(double) warehouses;//(double) 10*sqrt(warehouses);//
 
@@ -158,6 +160,26 @@ void WL_MRILS::Run(int pcea_routine, char *argv[])
 					if (elapsed_time > TIMEOUT)
 						break;
 				}
+
+				finalfitness(gBestSolution, &cost, &violations);
+
+				/* 
+				pairs *solve = getSol();
+
+				for (unsigned j = 0; j < patterns[p].size(); j++)
+				{
+
+					cout << j << ". " << patterns[p][j].s << " " << patterns[p][j].w << " " << patterns[p][j].q << endl;
+					if (!in.WarehouseIncompatible(patterns[p][j].w, patterns[p][j].s))
+					{
+						cout << "Inside If..." << endl;
+						solve[solcount].x = patterns[p][j].s;
+						solve[solcount].y = patterns[p][j].w;
+						solve[solcount].v = patterns[p][j].q;
+						solcount++;
+					}
+				}
+				*/
 
 				printSol(argv[2], gBestTime);
 
