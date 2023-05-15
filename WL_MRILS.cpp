@@ -167,11 +167,8 @@ void WL_MRILS::Run(int pcea_routine, char *argv[])
 
 				for (unsigned j = 0; j < patterns[p].size(); j++)
 				{
-
-					cout << j << ". " << patterns[p][j].s << " " << patterns[p][j].w << " " << patterns[p][j].q << endl;
-					if (!in.WarehouseIncompatible(patterns[p][j].w, patterns[p][j].s))
+					if (!in.WarehouseIncompatible(patterns[p][j].w, patterns[p][j].s) && warehouse_store[patterns[p][j].w][patterns[p][j].s] <= 0)
 					{
-						cout << "Inside If..." << endl;
 						solve[solcount].x = patterns[p][j].s;
 						solve[solcount].y = patterns[p][j].w;
 						solve[solcount].v = patterns[p][j].q;

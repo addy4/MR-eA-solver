@@ -47,7 +47,11 @@ int solcount;
 int *fcapacities, *demand;
 int *openwarehouses;
 int *p1, *p2;
+
+// Script
+
 int *conflicts;
+int **warehouse_store;
 
 /* Function declarations */
 void fitness(int[], int *, int *);
@@ -83,6 +87,7 @@ void readFixedcosts(int *fixedcosts_mr, int fixed_costs);
 void readDemands(int *storedemands_mr, int store_units);
 void readSupplycosts(int *supply_costs, int store_units, int ware_houses);
 void readIncompatibilities(int *incompatibilities_stores, int incompatibilities_occurences);
+void setWhStConflict(int wh, int st);
 pairs *getSol();
 
 #endif

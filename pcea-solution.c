@@ -257,6 +257,13 @@ void readData(char *inputfilename)
 	p1 = (int *)malloc((stores > warehouses ? stores : warehouses) * sizeof(int));
 	p2 = (int *)malloc((stores > warehouses ? stores : warehouses) * sizeof(int));
 
+	// Warehouse-Store
+	warehouse_store = (int **)malloc(warehouses * sizeof(int *));
+	for (int i = 0; i < warehouses; i++)
+	{
+		warehouse_store[i] = (int *)calloc(stores, sizeof(int));
+	}
+
 	// Initialize totalDemand
 	totalDemand = 0;
 	for (int i = 0; i < stores; i++)
@@ -265,16 +272,14 @@ void readData(char *inputfilename)
 	fclose(fp);
 }
 
-void setWhStConflict(int wh, int st)
+void setWhStConflict(int st, int wh)
 {
 	for (int i = 0; i < incompatibilities; i++)
 	{
 		if (incompatiblepairs[i].x == st)
 		{
-			// Initialize all sol entries to 0;
-			for (i = 0; i < stores; i++)
-				for (int j = 0; j < warehouses; j++)
-					*(sol + i * warehouses + j) = 0;
+			//printf("%d (wh) and %d (st) are not compatible\n", wh, incompatiblepairs[i].y);
+			warehouse_store[wh][incompatiblepairs[i].y]++;
 		}
 	}
 }
@@ -702,6 +707,7 @@ void fitness(int str[], int *solcost, int *nviolations)
 					sol1[solcount].x = i;
 					sol1[solcount].y = j;
 					sol1[solcount].v += demand[i];
+					setWhStConflict(sol1[solcount].x, sol1[solcount].y);
 				}
 				fcapacities[j] -= demand[i];
 				demand[i] = 0;
@@ -737,6 +743,7 @@ void fitness(int str[], int *solcost, int *nviolations)
 					sol1[solcount].x = i;
 					sol1[solcount].y = j;
 					sol1[solcount].v += fcapacities[j];
+					setWhStConflict(sol1[solcount].x, sol1[solcount].y);
 				}
 				demand[i] -= fcapacities[j];
 				fcapacities[j] = 0;
@@ -868,6 +875,7 @@ void finalfitness(int str[], int *solcost, int *nviolations)
 					sol1[solcount].x = i;
 					sol1[solcount].y = j;
 					sol1[solcount].v += demand[i];
+					setWhStConflict(sol1[solcount].x, sol1[solcount].y);
 				}
 				fcapacities[j] -= demand[i];
 				demand[i] = 0;
@@ -903,6 +911,7 @@ void finalfitness(int str[], int *solcost, int *nviolations)
 					sol1[solcount].x = i;
 					sol1[solcount].y = j;
 					sol1[solcount].v += fcapacities[j];
+					setWhStConflict(sol1[solcount].x, sol1[solcount].y);
 				}
 				demand[i] -= fcapacities[j];
 				fcapacities[j] = 0;
